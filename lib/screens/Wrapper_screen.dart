@@ -62,12 +62,11 @@ class _WrapperScreenState extends State<WrapperScreen> {
           },
           height: 50,
           color: primColor,
-          backgroundColor: backgroundColor,
+          backgroundColor: Colors.transparent,
           buttonBackgroundColor: primColor,
           items: _navBarItems,
         ),
-        body: Container(
-          child: _screens[_currentScreenIndex],
-        ));
+        extendBody: true,
+        body: _screens[_currentScreenIndex]);
   }
 }

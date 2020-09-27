@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:haya/config.dart';
+import 'package:haya/models/user_model.dart';
 import 'package:haya/screens/Wrapper_screen.dart';
 import 'package:haya/screens/register_screen.dart';
 
@@ -72,6 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
                                   Checkbox(
+                                    activeColor: backgroundColor,
                                     value: _checked,
                                     onChanged: (bool value) {
                                       setState(() {
@@ -107,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(height: 25),
                           RaisedButton.icon(
                             icon: Icon(Icons.chevron_right),
-                            color: Colors.cyan,
+                            color: backgroundColor,
                             colorBrightness: Brightness.light,
                             onLongPress: () => Navigator.of(context)
                                 .pushReplacementNamed(WrapperScreen.routeName),
@@ -122,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     passwordController.text;
 
                                 // todo authentification with middleware.
-
+                                final user = User.fromMap(_credentials);
                                 //showing alert dialog or something to the user
                                 showDialog(
                                   context: context,
@@ -136,13 +139,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             label: Text('Login'),
                           ),
-                          SizedBox(height: 25),
-                          Divider(
-                            color: Colors.white,
-                          ),
-                          SizedBox(height: 25),
+                          SizedBox(height: 10),
                           Align(
-                            alignment: Alignment.center,
+                            alignment: Alignment.centerRight,
                             child: InkWell(
                               onTap: () => Navigator.of(context)
                                   .pushReplacementNamed(

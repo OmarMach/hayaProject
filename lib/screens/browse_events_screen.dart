@@ -6,33 +6,31 @@ class BrowseEventsScreen extends StatelessWidget {
   static const routeName = "/browse/events";
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(10),
-                child: GridView.count(
-                  crossAxisCount: 1,
-                  childAspectRatio: 2,
-                  shrinkWrap: true,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  physics: ScrollPhysics(),
-                  children: <Widget>[
-                    _buildEventItem(context, 'omar'),
-                    _buildEventItem(context, 'omar23'),
-                    _buildEventItem(context, 'omar15e'),
-                    _buildEventItem(context, 'omar156'),
-                    _buildEventItem(context, 'omar15'),
-                    _buildEventItem(context, 'omar2'),
-                    _buildEventItem(context, 'omar1'),
-                  ],
-                ),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.all(10),
+              child: GridView.count(
+                crossAxisCount: 1,
+                childAspectRatio: 2,
+                shrinkWrap: true,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                physics: ScrollPhysics(),
+                children: <Widget>[
+                  _buildEventItem(context, 'omar'),
+                  _buildEventItem(context, 'omar23'),
+                  _buildEventItem(context, 'omar15e'),
+                  _buildEventItem(context, 'omar156'),
+                  _buildEventItem(context, 'omar15'),
+                  _buildEventItem(context, 'omar2'),
+                  _buildEventItem(context, 'omar1'),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
