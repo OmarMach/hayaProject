@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:haya/screens/add_event_screen.dart';
 import 'package:haya/screens/browse_regions_screen.dart';
 import 'package:haya/screens/splash_screen.dart';
 
@@ -32,4 +33,5 @@ final routes = {
   LoginScreen.routeName: (context) => LoginScreen(),
   RegisterScreen.routeName: (context) => RegisterScreen(),
   SplashScreen.routeName: (context) => SplashScreen(),
+  AddEventScreen.routeName: (context) => AddEventScreen(),
 };

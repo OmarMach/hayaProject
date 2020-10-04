@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:haya/config.dart';
-import 'package:haya/models/user_model.dart';
 import 'package:haya/screens/Wrapper_screen.dart';
 import 'package:haya/screens/register_screen.dart';
 
@@ -114,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             colorBrightness: Brightness.light,
                             onLongPress: () => Navigator.of(context)
                                 .pushReplacementNamed(WrapperScreen.routeName),
-                            onPressed: () {
+                            onPressed: () async {
                               if (_key.currentState.validate()) {
                                 _key.currentState.save();
 
@@ -125,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     passwordController.text;
 
                                 // todo authentification with middleware.
-                                final user = User.fromMap(_credentials);
+
                                 //showing alert dialog or something to the user
                                 showDialog(
                                   context: context,

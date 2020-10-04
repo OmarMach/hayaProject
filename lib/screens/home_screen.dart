@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:haya/screens/add_event_screen.dart';
 import 'package:haya/screens/browse_events_screen.dart';
 import 'package:haya/screens/browse_regions_screen.dart';
 import 'package:haya/screens/features_screen.dart';
@@ -67,6 +68,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       category: 'Splash screen',
                       routeName: SplashScreen.routeName,
                       icon: Icons.watch_later,
+                    ),
+                    ClipGridItem(
+                      category: 'Add Event',
+                      routeName: AddEventScreen.routeName,
+                      icon: Icons.add_box,
                     ),
                   ],
                 ),
