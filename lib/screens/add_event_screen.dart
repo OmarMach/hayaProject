@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:haya/config.dart';
-import 'package:haya/models/user_model.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddEventScreen extends StatefulWidget {
@@ -12,6 +11,7 @@ class AddEventScreen extends StatefulWidget {
 }
 
 class _AddEventScreenState extends State<AddEventScreen> {
+  // TODO : Validation with each step / Swipe between steps if that step is successful
   final _key = GlobalKey<FormState>();
 
   bool _oneDayEvent = true;
@@ -172,87 +172,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     if (_formStep == 3) ...[
                       Text("Event Privacy : "),
                       SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          RaisedButton(
-                            color: _isPrivate ? backgroundColor : null,
-                            onPressed: () {
-                              setState(() {
-                                _isPrivate = true;
-                              });
-                            },
-                            child: Text('Private'),
-                          ),
-                          RaisedButton(
-                            onPressed: () {
-                              setState(() {
-                                _isPrivate = false;
-                              });
-                            },
-                            color: !_isPrivate ? backgroundColor : null,
-                            child: Text('Public'),
-                          )
-                        ],
-                      ),
+                      _buildPrivacyButtons(),
                       SizedBox(height: 10),
-                      ExpansionTile(
-                        title: Text('Invite Friends'),
-                        children: [
-                          ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: _friendList.length,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              final currentItem = _friendList[index];
-                              return InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    currentItem['active'] =
-                                        !currentItem['active'];
-                                  });
-                                },
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Container(
-                                    padding: const EdgeInsets.all(11.0),
-                                    margin: EdgeInsets.all(5),
-                                    color: currentItem['active']
-                                        ? backgroundColor
-                                        : null,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            CircleAvatar(
-                                                backgroundColor:
-                                                    backgroundColor,
-                                                child: Text(
-                                                  currentItem['name']
-                                                      .toString()[0],
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                )),
-                                            Container(
-                                              margin: EdgeInsets.only(left: 15),
-                                              child: Text(
-                                                  "${currentItem['name']}"),
-                                            ),
-                                          ],
-                                        ),
-                                        if (currentItem['active'])
-                                          Icon(Icons.check)
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+                      _buildFriendList(),
                       SizedBox(height: 10),
                       RaisedButton(
                         onPressed: () {},
@@ -267,6 +189,83 @@ class _AddEventScreenState extends State<AddEventScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  ExpansionTile _buildFriendList() {
+    return ExpansionTile(
+      title: Text('Invite Friends'),
+      children: [
+        ListView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: _friendList.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            final currentItem = _friendList[index];
+            return InkWell(
+              onTap: () {
+                setState(() {
+                  currentItem['active'] = !currentItem['active'];
+                });
+              },
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  padding: const EdgeInsets.all(11.0),
+                  margin: EdgeInsets.all(5),
+                  color: currentItem['active'] ? backgroundColor : null,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          CircleAvatar(
+                              backgroundColor: backgroundColor,
+                              child: Text(
+                                currentItem['name'].toString()[0],
+                                style: TextStyle(color: Colors.white),
+                              )),
+                          Container(
+                            margin: EdgeInsets.only(left: 15),
+                            child: Text("${currentItem['name']}"),
+                          ),
+                        ],
+                      ),
+                      if (currentItem['active']) Icon(Icons.check)
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Row _buildPrivacyButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        RaisedButton(
+          color: _isPrivate ? backgroundColor : null,
+          onPressed: () {
+            setState(() {
+              _isPrivate = true;
+            });
+          },
+          child: Text('Private'),
+        ),
+        RaisedButton(
+          onPressed: () {
+            setState(() {
+              _isPrivate = false;
+            });
+          },
+          color: !_isPrivate ? backgroundColor : null,
+          child: Text('Public'),
+        )
+      ],
     );
   }
 
