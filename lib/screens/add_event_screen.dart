@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:haya/config.dart';
+import 'package:haya/models/user_model.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddEventScreen extends StatefulWidget {
@@ -14,14 +15,45 @@ class _AddEventScreenState extends State<AddEventScreen> {
   final _key = GlobalKey<FormState>();
 
   bool _oneDayEvent = true;
+  bool _isPrivate = false;
   int _formStep = 0;
+  String _stepText = "General informations";
 
   String _selectedCategory = "Camping";
   String _selectedRegion = "Benzart";
   String _selectedPlace = "Ain Damous";
 
+  var _friendList = [
+    {
+      "name": "Jhon doe",
+      "active": false,
+    },
+    {
+      "name": "Omar Mach",
+      "active": false,
+    },
+    {
+      "name": "Jackson Teller",
+      "active": false,
+    },
+    {
+      "name": "Gemma Morrow",
+      "active": false,
+    },
+    {
+      "name": "Tara Spken",
+      "active": false,
+    },
+    {
+      "name": "Red Mcdisc",
+      "active": false,
+    },
+  ];
+
   final _startDayController = TextEditingController();
   final _endDayController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
 
   final List<DropdownMenuItem<String>> _categories = [
     DropdownMenuItem(value: "Camping", child: Text("Camping")),
@@ -47,6 +79,15 @@ class _AddEventScreenState extends State<AddEventScreen> {
   File _image;
   final picker = ImagePicker();
 
+  @override
+  void dispose() {
+    _startDayController.dispose();
+    _endDayController.dispose();
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
@@ -57,13 +98,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
         print('No image selected.');
       }
     });
-  }
-
-  @override
-  void dispose() {
-    _startDayController.dispose();
-    _endDayController.dispose();
-    super.dispose();
   }
 
   @override
@@ -80,66 +114,219 @@ class _AddEventScreenState extends State<AddEventScreen> {
             child: Form(
               key: _key,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Create event..",
-                    style: TextStyle(fontSize: 50),
-                  ),
-                  Text("Please fill in the event details.."),
-                  SizedBox(height: 20),
-                  if (_formStep == 0) ...[
-                    _buildImageploader(),
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Create event..",
+                      style: TextStyle(fontSize: 50),
+                    ),
+                    Text("Please fill in the event details.."),
                     SizedBox(height: 20),
-                    TextFormField(
-                      validator: (value) => value.length >= 5
-                          ? null
-                          : 'Please enter a valid event name.',
-                      decoration: _buildInputDecoration('Event name', null),
-                    ),
+                    _buildStepNumberRow(),
+                    SizedBox(height: 20),
+                    // STEP ONE ELEMENTS
+                    if (_formStep == 0) ...[
+                      _buildImageploader(),
+                      SizedBox(height: 20),
+                      TextFormField(
+                        controller: _titleController,
+                        validator: (value) => value.length >= 5
+                            ? null
+                            : 'Please enter a valid event name.',
+                        decoration: _buildInputDecoration('Event name', null),
+                      ),
+                      SizedBox(height: 10),
+                      TextFormField(
+                        minLines: 3,
+                        maxLines: 10,
+                        controller: _descriptionController,
+                        validator: (value) => value.length >= 5
+                            ? null
+                            : 'Please enter a valid event descirption.',
+                        decoration:
+                            _buildInputDecoration('Event description', null),
+                      ),
+                    ],
+                    // STEP 2 ELEMENTs
+                    if (_formStep == 1) ...[
+                      SizedBox(height: 10),
+                      _buildDropdownButtonFormField(
+                          _categories, _selectedCategory, "Category"),
+                      SizedBox(height: 10),
+                      _buildDateRow(context),
+                      SizedBox(height: 10),
+                      _buildCheckBoxRow(),
+                    ],
+                    // STEP THREE ELEMENTS
+                    if (_formStep == 2) ...[
+                      SizedBox(height: 10),
+                      _buildDropdownButtonFormField(
+                          _regions, _selectedRegion, "Region"),
+                      SizedBox(height: 10),
+                      _buildDropdownButtonFormField(
+                          _places, _selectedPlace, "Place"),
+                    ],
                     SizedBox(height: 10),
-                    TextFormField(
-                      minLines: 3,
-                      maxLines: 10,
-                      validator: (value) => value.length >= 5
-                          ? null
-                          : 'Please enter a valid event descirption.',
-                      decoration:
-                          _buildInputDecoration('Event description', null),
-                    ),
-                  ],
-                  if (_formStep == 1) ...[
+                    // STEP FOUR ELEMENTS
+                    if (_formStep == 3) ...[
+                      Text("Event Privacy : "),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          RaisedButton(
+                            color: _isPrivate ? backgroundColor : null,
+                            onPressed: () {
+                              setState(() {
+                                _isPrivate = true;
+                              });
+                            },
+                            child: Text('Private'),
+                          ),
+                          RaisedButton(
+                            onPressed: () {
+                              setState(() {
+                                _isPrivate = false;
+                              });
+                            },
+                            color: !_isPrivate ? backgroundColor : null,
+                            child: Text('Public'),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      ExpansionTile(
+                        title: Text('Invite Friends'),
+                        children: [
+                          ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: _friendList.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              final currentItem = _friendList[index];
+                              return InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    currentItem['active'] =
+                                        !currentItem['active'];
+                                  });
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(11.0),
+                                    margin: EdgeInsets.all(5),
+                                    color: currentItem['active']
+                                        ? backgroundColor
+                                        : null,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            CircleAvatar(
+                                                backgroundColor:
+                                                    backgroundColor,
+                                                child: Text(
+                                                  currentItem['name']
+                                                      .toString()[0],
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                )),
+                                            Container(
+                                              margin: EdgeInsets.only(left: 15),
+                                              child: Text(
+                                                  "${currentItem['name']}"),
+                                            ),
+                                          ],
+                                        ),
+                                        if (currentItem['active'])
+                                          Icon(Icons.check)
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      RaisedButton(
+                        onPressed: () {},
+                        color: backgroundColor,
+                        child: Text("Create event"),
+                        textColor: primColor,
+                      )
+                    ],
                     SizedBox(height: 10),
-                    _buildDropdownButtonFormField(
-                        _categories, _selectedCategory, "Category"),
-                    SizedBox(height: 10),
-                    _buildDateRow(context),
-                    SizedBox(height: 10),
-                    _buildCheckBoxRow(),
-                  ],
-                  if (_formStep == 2) ...[
-                    SizedBox(height: 10),
-                    _buildDropdownButtonFormField(
-                        _regions, _selectedRegion, "Region"),
-                    SizedBox(height: 10),
-                    _buildDropdownButtonFormField(
-                        _places, _selectedPlace, "Place"),
-                    SizedBox(height: 10),
-                    RaisedButton(
-                      onPressed: () {},
-                      color: backgroundColor,
-                      child: Text("Create event"),
-                      textColor: primColor,
-                    )
-                  ],
-                  SizedBox(height: 10),
-                ],
-              ),
+                  ]),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Row _buildStepNumberRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        InkWell(
+          onTap: () {
+            setState(() {
+              _formStep = 0;
+              _stepText = setFormStepText(_formStep);
+            });
+          },
+          child: CircleAvatar(
+            backgroundColor:
+                _formStep != 0 ? Colors.grey.withAlpha(50) : backgroundColor,
+            child: Text("1", style: TextStyle(color: Colors.white)),
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            setState(() {
+              _formStep = 1;
+              _stepText = setFormStepText(_formStep);
+            });
+          },
+          child: CircleAvatar(
+            backgroundColor:
+                _formStep != 1 ? Colors.grey.withAlpha(50) : backgroundColor,
+            child: Text("2", style: TextStyle(color: Colors.white)),
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            setState(() {
+              _formStep = 2;
+              _stepText = setFormStepText(_formStep);
+            });
+          },
+          child: CircleAvatar(
+            backgroundColor:
+                _formStep != 2 ? Colors.grey.withAlpha(50) : backgroundColor,
+            child: Text("3", style: TextStyle(color: Colors.white)),
+          ),
+        ),
+        InkWell(
+          onTap: () {
+            setState(() {
+              _formStep = 3;
+              _stepText = setFormStepText(_formStep);
+            });
+          },
+          child: CircleAvatar(
+            backgroundColor:
+                _formStep != 3 ? Colors.grey.withAlpha(50) : backgroundColor,
+            child: Text("4", style: TextStyle(color: Colors.white)),
+          ),
+        ),
+      ],
     );
   }
 
@@ -182,14 +369,16 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   : () {
                       setState(() {
                         _formStep--;
+                        _stepText = setFormStepText(_formStep);
                       });
                     },
             ),
           ),
         ),
+        Text(_stepText),
         ClipOval(
           child: Material(
-            color: _formStep == 2 ? Colors.grey.withAlpha(70) : backgroundColor,
+            color: _formStep == 3 ? Colors.grey.withAlpha(70) : backgroundColor,
             child: InkWell(
               splashColor: lighterprimColor,
               child: SizedBox(
@@ -197,14 +386,15 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 height: 50,
                 child: Icon(
                   Icons.arrow_forward,
-                  color: _formStep == 2 ? Colors.grey : lighterprimColor,
+                  color: _formStep == 3 ? Colors.grey : lighterprimColor,
                 ),
               ),
-              onTap: _formStep == 2
+              onTap: _formStep == 3
                   ? null
                   : () {
                       setState(() {
                         _formStep++;
+                        _stepText = setFormStepText(_formStep);
                       });
                     },
             ),
@@ -308,4 +498,23 @@ InputDecoration _buildInputDecoration(String hint, IconData icon) {
       borderSide: new BorderSide(color: primColor),
     ),
   );
+}
+
+String setFormStepText(int formStep) {
+  switch (formStep) {
+    case 0:
+      return "General informations";
+      break;
+    case 1:
+      return "Date and category";
+      break;
+    case 2:
+      return "Location";
+      break;
+    case 3:
+      return "Privacy and invitations";
+      break;
+    default:
+      return "General informations";
+  }
 }
