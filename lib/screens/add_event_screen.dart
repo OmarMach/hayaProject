@@ -11,14 +11,21 @@ class AddEventScreen extends StatefulWidget {
 }
 
 class _AddEventScreenState extends State<AddEventScreen> {
-  // TODO : Validation with each step / Swipe between steps if that step is successful
+  // TODO : Validation with each step / Swipe between steps if that step is successful / preview event
+
   final _key = GlobalKey<FormState>();
 
-  bool _oneDayEvent = true;
+  final _startDayController = TextEditingController();
+  final _endDayController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final _formContent = {};
+
+  bool _oneDayEvent = false;
   bool _isPrivate = false;
   int _formStep = 0;
-  String _stepText = "General informations";
 
+  String _stepText = "General informations";
   String _selectedCategory = "Camping";
   String _selectedRegion = "Benzart";
   String _selectedPlace = "Ain Damous";
@@ -49,11 +56,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
       "active": false,
     },
   ];
-
-  final _startDayController = TextEditingController();
-  final _endDayController = TextEditingController();
-  final _titleController = TextEditingController();
-  final _descriptionController = TextEditingController();
 
   final List<DropdownMenuItem<String>> _categories = [
     DropdownMenuItem(value: "Camping", child: Text("Camping")),
@@ -152,7 +154,11 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     if (_formStep == 1) ...[
                       SizedBox(height: 10),
                       _buildDropdownButtonFormField(
-                          _categories, _selectedCategory, "Category"),
+                          _categories,
+                          _formContent['category'] == null
+                              ? _selectedCategory
+                              : _formContent['category'],
+                          "Category"),
                       SizedBox(height: 10),
                       _buildDateRow(context),
                       SizedBox(height: 10),
@@ -170,7 +176,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     SizedBox(height: 10),
                     // STEP FOUR ELEMENTS
                     if (_formStep == 3) ...[
-                      Text("Event Privacy : "),
+                      Text("Privacy : "),
                       SizedBox(height: 10),
                       _buildPrivacyButtons(),
                       SizedBox(height: 10),
@@ -350,55 +356,71 @@ class _AddEventScreenState extends State<AddEventScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        ClipOval(
-          child: Material(
-            color: _formStep == 0 ? Colors.grey.withAlpha(70) : backgroundColor,
-            child: InkWell(
-              splashColor: lighterprimColor,
-              child: SizedBox(
-                width: 50,
+        _formStep == 0
+            ? SizedBox(
                 height: 50,
-                child: Icon(
-                  Icons.arrow_back,
-                  color: _formStep == 0 ? Colors.grey : lighterprimColor,
+                width: 50,
+              )
+            : ClipOval(
+                child: Material(
+                  color: backgroundColor,
+                  child: InkWell(
+                    splashColor: lighterprimColor,
+                    child: SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: _formStep == 0 ? Colors.grey : lighterprimColor,
+                      ),
+                    ),
+                    onTap: _formStep == 0
+                        ? null
+                        : () {
+                            setState(() {
+                              _formStep--;
+                              _stepText = setFormStepText(_formStep);
+                              if (_formStep == 1)
+                                _formContent['category'] = _selectedCategory;
+                              if (_formStep == 2) {
+                                _formContent['place'] = _selectedPlace;
+                                _formContent['region'] = _selectedRegion;
+                              }
+                            });
+                          },
+                  ),
                 ),
               ),
-              onTap: _formStep == 0
-                  ? null
-                  : () {
-                      setState(() {
-                        _formStep--;
-                        _stepText = setFormStepText(_formStep);
-                      });
-                    },
-            ),
-          ),
-        ),
         Text(_stepText),
-        ClipOval(
-          child: Material(
-            color: _formStep == 3 ? Colors.grey.withAlpha(70) : backgroundColor,
-            child: InkWell(
-              splashColor: lighterprimColor,
-              child: SizedBox(
-                width: 50,
+        _formStep == 3
+            ? SizedBox(
                 height: 50,
-                child: Icon(
-                  Icons.arrow_forward,
-                  color: _formStep == 3 ? Colors.grey : lighterprimColor,
+                width: 50,
+              )
+            : ClipOval(
+                child: Material(
+                  color: backgroundColor,
+                  child: InkWell(
+                    splashColor: lighterprimColor,
+                    child: SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: Icon(
+                        Icons.arrow_forward,
+                        color: _formStep == 3 ? Colors.grey : lighterprimColor,
+                      ),
+                    ),
+                    onTap: _formStep == 3
+                        ? null
+                        : () {
+                            setState(() {
+                              _formStep++;
+                              _stepText = setFormStepText(_formStep);
+                            });
+                          },
+                  ),
                 ),
-              ),
-              onTap: _formStep == 3
-                  ? null
-                  : () {
-                      setState(() {
-                        _formStep++;
-                        _stepText = setFormStepText(_formStep);
-                      });
-                    },
-            ),
-          ),
-        )
+              )
       ],
     );
   }
@@ -427,6 +449,11 @@ class _AddEventScreenState extends State<AddEventScreen> {
       List items, String value, String label) {
     return DropdownButtonFormField(
         value: value,
+        onSaved: (val) {
+          setState(() {
+            _selectedRegion = val;
+          });
+        },
         decoration: _buildInputDecoration(label, null),
         onChanged: (val) {
           setState(() {
