@@ -12,6 +12,7 @@ class AddEventScreen extends StatefulWidget {
 
 class _AddEventScreenState extends State<AddEventScreen> {
   // TODO : Validation with each step / Swipe between steps if that step is successful / preview event
+  // TOFIX : saving dropdown menu items.
 
   final _key = GlobalKey<FormState>();
 
@@ -183,7 +184,9 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       _buildFriendList(),
                       SizedBox(height: 10),
                       RaisedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          print(_formContent);
+                        },
                         color: backgroundColor,
                         child: Text("Create event"),
                         textColor: primColor,
@@ -357,11 +360,13 @@ class _AddEventScreenState extends State<AddEventScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _formStep == 0
-            ? SizedBox(
+            ? // Displaying an empty box to keep the elements centred
+            SizedBox(
                 height: 50,
                 width: 50,
               )
-            : ClipOval(
+            : // Displaying the actual navigation buttons.
+            ClipOval(
                 child: Material(
                   color: backgroundColor,
                   child: InkWell(
@@ -371,21 +376,16 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       height: 50,
                       child: Icon(
                         Icons.arrow_back,
-                        color: _formStep == 0 ? Colors.grey : lighterprimColor,
+                        color: lighterprimColor,
                       ),
                     ),
                     onTap: _formStep == 0
                         ? null
                         : () {
+                            // Stepping backwards
                             setState(() {
                               _formStep--;
                               _stepText = setFormStepText(_formStep);
-                              if (_formStep == 1)
-                                _formContent['category'] = _selectedCategory;
-                              if (_formStep == 2) {
-                                _formContent['place'] = _selectedPlace;
-                                _formContent['region'] = _selectedRegion;
-                              }
                             });
                           },
                   ),
@@ -393,11 +393,13 @@ class _AddEventScreenState extends State<AddEventScreen> {
               ),
         Text(_stepText),
         _formStep == 3
-            ? SizedBox(
+            ? // Displaying an empty box to keep elements in place
+            SizedBox(
                 height: 50,
                 width: 50,
               )
-            : ClipOval(
+            : // Displaying the actual navigation button
+            ClipOval(
                 child: Material(
                   color: backgroundColor,
                   child: InkWell(
@@ -407,15 +409,22 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       height: 50,
                       child: Icon(
                         Icons.arrow_forward,
-                        color: _formStep == 3 ? Colors.grey : lighterprimColor,
+                        color: lighterprimColor,
                       ),
                     ),
                     onTap: _formStep == 3
                         ? null
                         : () {
+                            // Stepping forward
                             setState(() {
                               _formStep++;
                               _stepText = setFormStepText(_formStep);
+                              if (_formStep == 1)
+                                _formContent['category'] = _selectedCategory;
+                              if (_formStep == 2) {
+                                _formContent['place'] = _selectedPlace;
+                                _formContent['region'] = _selectedRegion;
+                              }
                             });
                           },
                   ),

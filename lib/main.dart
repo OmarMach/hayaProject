@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:haya/config.dart';
-import 'package:haya/screens/add_event_screen.dart';
 import 'package:haya/screens/login_screen.dart';
 
 void main() {
