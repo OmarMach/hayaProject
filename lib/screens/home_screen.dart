@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    'TESTING MENU',
+                    'Testing menu',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 40),
                   ),
@@ -36,13 +36,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   shrinkWrap: true,
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 20,
-                  crossAxisCount: 2,
+                  crossAxisCount: 3,
                   physics: NeverScrollableScrollPhysics(),
                   children: [
                     ClipGridItem(
                       category: 'Profile',
                       routeName: ProfileScreen.routeName,
                       icon: Icons.person,
+                    ),
+                    ClipGridItem(
+                      category: 'Add Event',
+                      routeName: AddEventScreen.routeName,
+                      icon: Icons.add,
                     ),
                     ClipGridItem(
                       category: 'Events',
@@ -57,22 +62,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     ClipGridItem(
                       category: 'Featured events',
                       routeName: FeaturesScreen.routeName,
-                      icon: Icons.star,
+                      icon: Icons.star_border,
                     ),
                     ClipGridItem(
                       category: 'Logout',
                       routeName: LoginScreen.routeName,
-                      icon: Icons.remove_circle_outline,
+                      icon: Icons.supervised_user_circle,
                     ),
                     ClipGridItem(
                       category: 'Splash screen',
                       routeName: SplashScreen.routeName,
                       icon: Icons.watch_later,
-                    ),
-                    ClipGridItem(
-                      category: 'Add Event',
-                      routeName: AddEventScreen.routeName,
-                      icon: Icons.add_box,
                     ),
                   ],
                 ),

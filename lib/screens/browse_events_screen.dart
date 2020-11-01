@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:haya/config.dart';
 import 'package:haya/screens/selected_event_screen.dart';
 
@@ -38,12 +39,17 @@ class BrowseEventsScreen extends StatelessWidget {
 
   Widget _buildEventItem(BuildContext context, String heroTag) {
     return Container(
-      color: backgroundColor,
       child: InkWell(
         onTap: () {
           Navigator.of(context).pushNamed(SelectedEventScreen.routeName);
         },
-        child: GridTile(
+        child: Container(
+          decoration: BoxDecoration(
+              border: Border.all(
+            color: lightBlueColor,
+            style: BorderStyle.solid,
+            width: 0.2,
+          )),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -54,7 +60,7 @@ class BrowseEventsScreen extends StatelessWidget {
                   tag: heroTag,
                   transitionOnUserGestures: false,
                   child: Image.asset(
-                    'assets/images/camping.jpg',
+                    'assets/images/campingVector.png',
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -67,31 +73,67 @@ class BrowseEventsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(
-                        "Camping ben guerden",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Long camping name",
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: yellowColor,
+                          ),
                         ),
                       ),
-                      Text(
-                        "This is the event's description please read it carefully before going into things you might regret one day lol.",
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Icon(Icons.place),
-                            Text("Ben guerden"),
-                            SizedBox(width: 10),
-                            Icon(Icons.person),
-                            Text("+20")
-                          ],
-                        ),
+                      SizedBox(height: 10),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                SimpleLineIcons.compass,
+                                size: 15,
+                                color: lightBlueColor,
+                              ),
+                              SizedBox(width: 10),
+                              Text("Somewhere, Planet earth"),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            children: [
+                              Icon(
+                                SimpleLineIcons.people,
+                                color: lightBlueColor,
+                                size: 15,
+                              ),
+                              SizedBox(width: 10),
+                              Text("Community : Haya comms"),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            children: [
+                              Icon(
+                                SimpleLineIcons.fire,
+                                color: lightBlueColor,
+                                size: 15,
+                              ),
+                              SizedBox(width: 10),
+                              Text("Category : Camping"),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            children: [
+                              Icon(
+                                SimpleLineIcons.calendar,
+                                color: lightBlueColor,
+                                size: 15,
+                              ),
+                              SizedBox(width: 10),
+                              Text("19/11/2020 - 21/11/2020"),
+                            ],
+                          ),
+                        ],
                       )
                     ],
                   ),

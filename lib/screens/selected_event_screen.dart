@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:haya/config.dart';
 
 class SelectedEventScreen extends StatelessWidget {
@@ -6,159 +7,195 @@ class SelectedEventScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Event\'s title and some text',
-                  style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: titleColor.withOpacity(0.5)),
+              Hero(
+                tag: 'omar',
+                child: Image.asset(
+                  'assets/images/campingVector.png',
+                  height: 250,
+                  fit: BoxFit.cover,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Hero(
-                      tag: 'omar',
-                      child: Image.asset(
-                        'assets/images/camping.jpg',
-                        height: 250,
-                        fit: BoxFit.fitWidth,
-                      )),
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  'Cool event name',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline3.copyWith(
+                        color: yellowColor,
+                        fontWeight: FontWeight.w100,
+                      ),
                 ),
               ),
-              SizedBox(height: 10),
-              Text(
-                placeHolderText,
-                textAlign: TextAlign.justify,
-                maxLines: 5,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  OutlineButton(
+                    borderSide: BorderSide(
+                      color: lightBlueColor,
+                    ),
+                    onPressed: () {},
+                    highlightedBorderColor: yellowColor,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                          color: lightBlueColor,
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'Join',
+                          style: TextStyle(
+                            color: lightBlueColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  OutlineButton(
+                    borderSide: BorderSide(
+                      color: lightBlueColor,
+                    ),
+                    onPressed: () {},
+                    highlightedBorderColor: yellowColor,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.share,
+                          size: 15,
+                          color: lightBlueColor,
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'Share',
+                          style: TextStyle(
+                            color: lightBlueColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  OutlineButton(
+                    borderSide: BorderSide(
+                      color: lightBlueColor,
+                    ),
+                    onPressed: () {},
+                    highlightedBorderColor: yellowColor,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.person_pin,
+                          size: 15,
+                          color: lightBlueColor,
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'Invite',
+                          style: TextStyle(
+                            color: lightBlueColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: 10),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Flexible(
-                      flex: 1,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Container(
-                          height: 100,
-                          color: primColor,
-                          padding: EdgeInsets.all(15),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: backgroundColor,
-                                child: Icon(
-                                  Icons.person,
-                                  color: primColor,
-                                ),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                'Omar Mach',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: backgroundColor,
-                                ),
-                              ),
-                            ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(height: 10),
+                    Text(
+                      'Description',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5
+                          .copyWith(color: lightBlueColor),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      placeHolderText,
+                      textAlign: TextAlign.justify,
+                      maxLines: 5,
+                    ),
+                    SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(
+                            SimpleLineIcons.compass,
+                            color: lightBlueColor,
                           ),
-                        ),
+                          SizedBox(width: 10),
+                          Text(
+                            "Location : Somewhere, Planet Earth",
+                            style: TextStyle(),
+                          )
+                        ],
                       ),
                     ),
-                    SizedBox(width: 25),
-                    Flexible(
-                      flex: 1,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Container(
-                          height: 100,
-                          color: primColor,
-                          padding: EdgeInsets.all(15),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '+25',
-                                style: TextStyle(
-                                  color: backgroundColor,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                'Participant',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: backgroundColor,
-                                ),
-                              ),
-                            ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(
+                            SimpleLineIcons.user,
+                            color: lightBlueColor,
                           ),
-                        ),
+                          SizedBox(width: 10),
+                          Text(
+                            "Organizer : Haya admin",
+                            style: TextStyle(),
+                          )
+                        ],
                       ),
                     ),
-                    SizedBox(width: 25),
-                    Flexible(
-                      flex: 1,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Container(
-                          padding: EdgeInsets.all(15),
-                          color: primColor,
-                          height: 100,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '19',
-                                style: TextStyle(
-                                  color: backgroundColor,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                'November',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: backgroundColor,
-                                ),
-                              ),
-                            ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(
+                            SimpleLineIcons.fire,
+                            color: lightBlueColor,
                           ),
-                        ),
+                          SizedBox(width: 10),
+                          Text(
+                            "Category : Camping",
+                            style: TextStyle(),
+                          )
+                        ],
                       ),
-                    )
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(
+                            SimpleLineIcons.calendar,
+                            color: lightBlueColor,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            "19-20-21 November 2020 ",
+                            style: TextStyle(),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 10),
                   ],
                 ),
               ),
-              SizedBox(height: 10),
-              RaisedButton(
-                color: titleColor.withOpacity(0.9),
-                onPressed: () {},
-                child: Text(
-                  'Participate',
-                  style: TextStyle(
-                    color: backgroundColor,
-                  ),
-                ),
-              )
             ],
           ),
         ),

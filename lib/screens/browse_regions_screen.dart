@@ -91,7 +91,7 @@ class BrowseRegionsScreen extends StatelessWidget {
               filterQuality: FilterQuality.low,
             ),
             Container(
-              color: Color.fromRGBO(89,99,72, 0.5),
+              color: Color.fromRGBO(89, 99, 72, 0.5),
             ),
             Align(
               alignment: Alignment.center,

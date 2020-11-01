@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../config.dart';
@@ -20,30 +19,24 @@ class ClipGridItem extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(context, routeName);
       },
-      child: GridTile(
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(15),
-          child: Container(
-            height: 20,
-            color: backgroundColor,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  icon,
-                  color: primColor,
-                  size: 85,
-                ),
-                Text(
-                  category,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20,
-                  ),
-                ),
-              ],
-            ),
+      child: Container(
+        height: 20,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: lighterprimColor,
           ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              size: 50,
+            ),
+            Text(
+              category,
+            ),
+          ],
         ),
       ),
     );

@@ -1,8 +1,5 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:haya/config.dart';
 import 'package:haya/screens/browse_events_screen.dart';
-import 'package:haya/screens/features_screen.dart';
 import 'package:haya/screens/home_screen.dart';
 import 'package:haya/screens/profile_screen.dart';
 
@@ -21,52 +18,46 @@ class _WrapperScreenState extends State<WrapperScreen> {
     HomeScreen(),
     BrowseEventsScreen(),
     ProfileScreen(),
-    FeaturesScreen()
   ];
 
   // displayed icons inside the navbar
   final _navBarItems = [
-    Icon(
-      Icons.home,
-      color: Colors.white,
-      size: 30,
+    BottomNavigationBarItem(
+      title: Text("Home"),
+      icon: Icon(
+        Icons.home,
+        size: 30,
+      ),
     ),
-    Icon(
-      Icons.search,
-      color: Colors.white,
-      size: 30,
+    BottomNavigationBarItem(
+      title: Text("Search"),
+      icon: Icon(
+        Icons.search,
+        size: 30,
+      ),
     ),
-    Icon(
-      Icons.person,
-      color: Colors.white,
-      size: 30,
-    ),
-    Icon(
-      Icons.star_border,
-      color: Colors.white,
-      size: 30,
-    ),
+    BottomNavigationBarItem(
+      title: Text("Profile"),
+      icon: Icon(
+        Icons.person,
+        size: 30,
+      ),
+    )
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: CurvedNavigationBar(
-          animationDuration: Duration(milliseconds: 400),
-          index: _currentScreenIndex,
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentScreenIndex,
+          items: _navBarItems,
           onTap: (i) {
             // updating the screen content through these lines
             setState(() {
               _currentScreenIndex = i;
             });
           },
-          height: 50,
-          color: primColor,
-          backgroundColor: Colors.transparent,
-          buttonBackgroundColor: primColor,
-          items: _navBarItems,
         ),
-        extendBody: true,
         body: _screens[_currentScreenIndex]);
   }
 }

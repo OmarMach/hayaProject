@@ -15,13 +15,13 @@ class SplashScreen extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(backgroundColor),
+              valueColor: AlwaysStoppedAnimation<Color>(lightBlueColor),
             ),
           ),
           SizedBox(height: 20),
           Text(
             "Haya, let's get lost...",
-            style: TextStyle(color: backgroundColor),
+            style: TextStyle(color: lightBlueColor),
           ),
         ],
       ),

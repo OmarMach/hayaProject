@@ -93,7 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           SizedBox(height: 20),
                           RaisedButton.icon(
                             icon: Icon(Icons.arrow_forward),
-                            color: backgroundColor,
+                            color: lightBlueColor,
                             onPressed: () {
                               if (_key.currentState.validate())
                                 _key.currentState.save();

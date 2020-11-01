@@ -73,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
                                   Checkbox(
-                                    activeColor: backgroundColor,
+                                    activeColor: lightBlueColor,
                                     value: _checked,
                                     onChanged: (bool value) {
                                       setState(() {
@@ -109,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(height: 25),
                           RaisedButton.icon(
                             icon: Icon(Icons.chevron_right),
-                            color: backgroundColor,
+                            color: lightBlueColor,
                             colorBrightness: Brightness.light,
                             onLongPress: () => Navigator.of(context)
                                 .pushReplacementNamed(WrapperScreen.routeName),

@@ -187,7 +187,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         onPressed: () {
                           print(_formContent);
                         },
-                        color: backgroundColor,
+                        color: lightBlueColor,
                         child: Text("Create event"),
                         textColor: primColor,
                       )
@@ -222,14 +222,14 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 child: Container(
                   padding: const EdgeInsets.all(11.0),
                   margin: EdgeInsets.all(5),
-                  color: currentItem['active'] ? backgroundColor : null,
+                  color: currentItem['active'] ? lightBlueColor : null,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
                           CircleAvatar(
-                              backgroundColor: backgroundColor,
+                              backgroundColor: lightBlueColor,
                               child: Text(
                                 currentItem['name'].toString()[0],
                                 style: TextStyle(color: Colors.white),
@@ -257,7 +257,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         RaisedButton(
-          color: _isPrivate ? backgroundColor : null,
+          color: _isPrivate ? lightBlueColor : null,
           onPressed: () {
             setState(() {
               _isPrivate = true;
@@ -271,7 +271,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
               _isPrivate = false;
             });
           },
-          color: !_isPrivate ? backgroundColor : null,
+          color: !_isPrivate ? lightBlueColor : null,
           child: Text('Public'),
         )
       ],
@@ -291,7 +291,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
           },
           child: CircleAvatar(
             backgroundColor:
-                _formStep != 0 ? Colors.grey.withAlpha(50) : backgroundColor,
+                _formStep != 0 ? Colors.grey.withAlpha(50) : lightBlueColor,
             child: Text("1", style: TextStyle(color: Colors.white)),
           ),
         ),
@@ -304,7 +304,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
           },
           child: CircleAvatar(
             backgroundColor:
-                _formStep != 1 ? Colors.grey.withAlpha(50) : backgroundColor,
+                _formStep != 1 ? Colors.grey.withAlpha(50) : lightBlueColor,
             child: Text("2", style: TextStyle(color: Colors.white)),
           ),
         ),
@@ -317,7 +317,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
           },
           child: CircleAvatar(
             backgroundColor:
-                _formStep != 2 ? Colors.grey.withAlpha(50) : backgroundColor,
+                _formStep != 2 ? Colors.grey.withAlpha(50) : lightBlueColor,
             child: Text("3", style: TextStyle(color: Colors.white)),
           ),
         ),
@@ -330,7 +330,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
           },
           child: CircleAvatar(
             backgroundColor:
-                _formStep != 3 ? Colors.grey.withAlpha(50) : backgroundColor,
+                _formStep != 3 ? Colors.grey.withAlpha(50) : lightBlueColor,
             child: Text("4", style: TextStyle(color: Colors.white)),
           ),
         ),
@@ -368,7 +368,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
             : // Displaying the actual navigation buttons.
             ClipOval(
                 child: Material(
-                  color: backgroundColor,
+                  color: lightBlueColor,
                   child: InkWell(
                     splashColor: lighterprimColor,
                     child: SizedBox(
@@ -401,7 +401,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
             : // Displaying the actual navigation button
             ClipOval(
                 child: Material(
-                  color: backgroundColor,
+                  color: lightBlueColor,
                   child: InkWell(
                     splashColor: lighterprimColor,
                     child: SizedBox(
@@ -502,7 +502,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         Checkbox(
-          activeColor: backgroundColor,
+          activeColor: lightBlueColor,
           value: _oneDayEvent,
           onChanged: (bool value) {
             setState(() {
