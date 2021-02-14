@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:haya/screens/add_event_screen.dart';
 import 'package:haya/screens/browse_events_screen.dart';
 import 'package:haya/screens/home_screen.dart';
 import 'package:haya/screens/profile_screen.dart';
@@ -30,7 +31,7 @@ class _WrapperScreenState extends State<WrapperScreen> {
       ),
     ),
     BottomNavigationBarItem(
-      title: Text("Search"),
+      title: Text("Join"),
       icon: Icon(
         Icons.search,
         size: 30,
