@@ -157,8 +157,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       _buildDropdownButtonFormField(
                           _categories,
                           _formContent['category'] == null
-                              ? _selectedCategory
-                              : _formContent['category'],
+                              ? _selectedCategory.toString()
+                              : _formContent['category'].toString(),
                           "Category"),
                       SizedBox(height: 10),
                       _buildDateRow(context),

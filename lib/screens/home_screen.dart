@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:haya/screens/add_club_screen.dart';
 import 'package:haya/screens/add_event_screen.dart';
 import 'package:haya/screens/browse_events_screen.dart';
 import 'package:haya/screens/browse_regions_screen.dart';
@@ -47,6 +48,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     ClipGridItem(
                       category: 'Add Event',
                       routeName: AddEventScreen.routeName,
+                      icon: Icons.add,
+                    ),
+                    ClipGridItem(
+                      category: 'Add Club',
+                      routeName: AddClubScreen.routeName,
                       icon: Icons.add,
                     ),
                     ClipGridItem(
