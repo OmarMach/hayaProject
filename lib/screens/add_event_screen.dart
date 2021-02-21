@@ -166,6 +166,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       _buildCheckBoxRow(),
                     ],
                     // STEP THREE ELEMENTS
+                    // TODO : ADD a dynamic map view here.
                     if (_formStep == 2) ...[
                       SizedBox(height: 10),
                       _buildDropdownButtonFormField(
@@ -257,7 +258,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         RaisedButton(
-          color: _isPrivate ? lightBlueColor : null,
+          textColor: _isPrivate ? greyColor : primColor,
+          color: _isPrivate ? yellowColor : lightBlueColor,
           onPressed: () {
             setState(() {
               _isPrivate = true;
@@ -271,7 +273,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
               _isPrivate = false;
             });
           },
-          color: !_isPrivate ? lightBlueColor : null,
+          color: !_isPrivate ? yellowColor : lightBlueColor,
+          textColor: !_isPrivate ? greyColor : primColor,
           child: Text('Public'),
         )
       ],
@@ -292,7 +295,10 @@ class _AddEventScreenState extends State<AddEventScreen> {
           child: CircleAvatar(
             backgroundColor:
                 _formStep != 0 ? Colors.grey.withAlpha(50) : lightBlueColor,
-            child: Text("1", style: TextStyle(color: Colors.white)),
+            child: Text("1",
+                style: TextStyle(
+                  color: _formStep == 0 ? primColor : Colors.white,
+                )),
           ),
         ),
         InkWell(
@@ -305,7 +311,10 @@ class _AddEventScreenState extends State<AddEventScreen> {
           child: CircleAvatar(
             backgroundColor:
                 _formStep != 1 ? Colors.grey.withAlpha(50) : lightBlueColor,
-            child: Text("2", style: TextStyle(color: Colors.white)),
+            child: Text("2",
+                style: TextStyle(
+                  color: _formStep == 1 ? primColor : Colors.white,
+                )),
           ),
         ),
         InkWell(
@@ -318,7 +327,10 @@ class _AddEventScreenState extends State<AddEventScreen> {
           child: CircleAvatar(
             backgroundColor:
                 _formStep != 2 ? Colors.grey.withAlpha(50) : lightBlueColor,
-            child: Text("3", style: TextStyle(color: Colors.white)),
+            child: Text("3",
+                style: TextStyle(
+                  color: _formStep == 2 ? primColor : Colors.white,
+                )),
           ),
         ),
         InkWell(
@@ -331,7 +343,10 @@ class _AddEventScreenState extends State<AddEventScreen> {
           child: CircleAvatar(
             backgroundColor:
                 _formStep != 3 ? Colors.grey.withAlpha(50) : lightBlueColor,
-            child: Text("4", style: TextStyle(color: Colors.white)),
+            child: Text("4",
+                style: TextStyle(
+                  color: _formStep == 3 ? primColor : Colors.white,
+                )),
           ),
         ),
       ],
