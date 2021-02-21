@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'package:flutter/material.dart';
 import 'package:haya/screens/add_club_screen.dart';
 import 'package:haya/screens/add_event_screen.dart';
 import 'package:haya/screens/browse_regions_screen.dart';
@@ -26,8 +25,19 @@ final greenColor = Color(0xFF41D992);
 final lightBlueColor = Color(0xFFAEF2D3);
 final yellowColor = Color(0xFFF2B44A);
 
+final titleStyle = TextStyle(
+  fontSize: 15,
+);
+final darkText = TextStyle(
+  color: Colors.black,
+);
+final darkTitle = TextStyle(
+  fontSize: 13,
+  color: Colors.black,
+);
+
 final placeHolderText =
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non quam varius, gravida tellus sit amet, tincidunt augue. Nunc posuere vitae dolor quis porta. Vivamus elementum purus eget ligula sagittis, id viverra leo luctus. Pellentesque maximus purus sed lorem viverra consectetur. Sed gravida, lectus lacinia facilisis vulputate, sapien augue gravida neque, in ullamcorper quam metus ut lorem. Aenean nisl diam, blandit semper purus vitae, varius malesuada odio';
+    'Lo vulputate, sapien augue gravida neque, in ullamcorper quam metus ut lorem. Aenean nisl diam, blandit semper purus vitae, varius malesuada odio';
 
 final routes = {
   BrowseRegionsScreen.routeName: (context) => BrowseRegionsScreen(),

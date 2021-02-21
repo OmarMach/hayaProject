@@ -1,78 +1,194 @@
 import 'package:flutter/material.dart';
+import 'package:haya/config.dart';
 
 class FeaturesScreen extends StatelessWidget {
   static const routeName = '/feature';
+
   @override
   Widget build(BuildContext context) {
-    final src =
-        'https://images.pexels.com/photos/3561946/pexels-photo-3561946.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940';
+    final size = MediaQuery.of(context).size;
+
+    final src2 =
+        'https://cdn.pixabay.com/photo/2016/10/14/19/21/canyon-1740973_960_720.jpg';
     return Scaffold(
       body: SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
+          child: Padding(
             padding: EdgeInsets.all(10.0),
-            child: ListView(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              physics: ScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                FeaturedItem(src: src),
-                FeaturedItem(
-                    src:
-                        'https://images.pexels.com/photos/775201/pexels-photo-775201.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
-                FeaturedItem(
-                    src:
-                        'https://images.pexels.com/photos/3031075/pexels-photo-3031075.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Container(
+                    color: primColor,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundImage:
+                                AssetImage("assets/images/profile.png"),
+                          ),
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Good Morning, Haya Admin"),
+                                Text(
+                                  placeHolderText,
+                                  style: TextStyle(fontSize: 10),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    OutlineButton(
+                      borderSide: BorderSide(
+                        color: lightBlueColor,
+                      ),
+                      highlightedBorderColor: yellowColor,
+                      textColor: lightBlueColor,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.search),
+                          Text("Find"),
+                        ],
+                      ),
+                      onPressed: () {},
+                    ),
+                    OutlineButton(
+                      borderSide: BorderSide(
+                        color: lightBlueColor,
+                      ),
+                      highlightedBorderColor: yellowColor,
+                      textColor: lightBlueColor,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.add),
+                          Text("Create"),
+                        ],
+                      ),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Text("News", style: titleStyle),
+                SizedBox(height: 10),
+                Container(
+                  color: lightBlueColor,
+                  height: size.height * 0.20,
+                  width: size.width * 0.20,
+                ),
+                SizedBox(height: 10),
+                Text("Favourite Clubs", style: titleStyle),
+                SizedBox(height: 10),
+                Container(
+                  color: lightBlueColor,
+                  height: size.height * 0.20,
+                  width: size.width * 0.20,
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Locations", style: titleStyle),
+                    Text("...", style: titleStyle),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Container(
+                  // color: primColor,
+                  height: size.height * 0.25,
+                  width: size.width * 0.20,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        FavLocation(src2: src2, size: size),
+                        FavLocation(src2: src2, size: size),
+                        FavLocation(src2: src2, size: size),
+                        FavLocation(src2: src2, size: size),
+                      ],
+                    ),
+                  ),
+                ),
               ],
-            )),
+            ),
+          ),
+        ),
       ),
     );
   }
 }
 
-class FeaturedItem extends StatelessWidget {
-  const FeaturedItem({
+class FavLocation extends StatelessWidget {
+  const FavLocation({
     Key key,
-    @required this.src,
+    @required this.src2,
+    @required this.size,
   }) : super(key: key);
 
-  final String src;
+  final String src2;
+  final Size size;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: MediaQuery.of(context).size.height * 0.95,
-          padding: EdgeInsets.all(10),
-          child: Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.network(
-                  src,
-                  height: MediaQuery.of(context).size.height * 0.95,
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  fit: BoxFit.fitHeight,
-                ),
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: size.width * .40,
+            color: lightBlueColor,
+            child: Center(
+              child: Text(
+                "Location Name",
+                style: darkTitle,
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
+            ),
+          ),
+          Image.network(
+            src2,
+            width: size.width * .40,
+          ),
+          Container(
+              padding: EdgeInsets.all(10),
+              width: size.width * .39,
+              color: lightBlueColor,
+              child: Expanded(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'This is a sponsorized event, the content will be previewed once the application opens',
+                      "Event 1",
+                      style: darkTitle,
+                    ),
+                    Text(
+                      "Get lost in the beauty of Place1, where you can find sunny beaches, ",
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
+                        fontSize: 10,
+                        color: Colors.black,
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
-          ),
-        ),
-      ],
+              )),
+        ],
+      ),
     );
   }
 }
